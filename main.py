@@ -20,3 +20,4 @@ if __name__ == '__main__':
     
     nutri_base.create_tabs()
     nutri_base.add_data('food_product', food_df)
+    nutri_base.add_data('nutrient', nutri_df)

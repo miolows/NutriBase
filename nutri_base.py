@@ -8,7 +8,7 @@ class NutriBase(DataBase):
     def create_tabs(self):
         self.create_table('food_product',
                           ['fdc_id', 'category', 'description'],
-                          ['INT', 'VARCHAR(40)', 'VARCHAR(40)'],
+                          ['INT', 'VARCHAR(40)', 'VARCHAR(200)'],
                           ['PRIMARY KEY', 'NOT NULL', 'NOT NULL'])
         
         self.create_table('nutrient', 
