@@ -3,9 +3,9 @@ from tqdm import tqdm
 
 
 from usda import USDA
-from food import FoodProduct, Nutrient
+from food import *
 
-
+'''
 def sort_products(data):
     product_cat = list(set([d.get('foodCategory') for d in data]))
     product_classifier = {p_c: list() for p_c in product_cat}
@@ -42,13 +42,53 @@ def food_nutrients(nutrients_data, food_id):
         n = Nutrient(n_id, food_id, n_name, n_unit, n_value)
         food_nutrients.append(n)
     return food_nutrients
+'''
+
+''' ----------------------------------------------------------------------- '''
+
+def data_tables(foods_data):
+    f_products = []
+    nutrients = []
+    n_declarations = []
+    
+    for fd in tqdm(foods_data):
+        fp_id = fd.get('fdcId')
+        cat = fd.get('foodCategory')
+        desc = fd.get('description')
+        fd_nutrient_data = fd.get('foodNutrients')
+        f_products.append(FoodProduct(fp_id, cat, desc))
+        
+        for fn in fd_nutrient_data:
+            n_id = fn.get('nutrientId')
+            nd_id = fn.get('foodNutrientId')
+            name = fn.get('nutrientName')
+            unit = fn.get('unitName')
+            value = fn.get('value')
+            
+            nutrients.append(Nutrient(n_id, name, unit))
+            n_declarations.append(NutritionDeclaration(nd_id, n_id, fp_id, value))
+            
+    f_products = pd.DataFrame(f_products)
+    nutrients = pd.DataFrame(nutrients).drop_duplicates()
+    n_declarations = pd.DataFrame(n_declarations)
+    
+    return f_products, nutrients, n_declarations
+
+
+
+# def data_tables(foods_data):
+#     fp = [food_product(p) for p in tqdm(foods_data)]
+#     fnh = [[nutrients_data_holder(p.get('fdcId'), n) for n in p.get('foodNutrients')] 
+#            for p in tqdm(foods_data)]
+    
+#     fp = pd.DataFrame(fp)
+#     fnh = pd.DataFrame(fnh)
+#     return fp, fnh
+
+
 
 
 
 if __name__ == '__main__':
-    usda_data = USDA()
-    food_data = usda_data.get_food_data('SR Legacy')
-    food, nutrients = data_tables(food_data)
-    
-    pdf = pd.DataFrame(food)
-    pdn = pd.DataFrame(nutrients)
+    usda_data = USDA('key.txt')
+    foods, nutrients, declarations = data_tables(usda_data.get_food_data('SR Legacy'))

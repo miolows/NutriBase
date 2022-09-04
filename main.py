@@ -10,14 +10,12 @@ if __name__ == '__main__':
     sql_password_file = "mysqlpw.txt"
     
     usda_data = USDA(usda_api_key_file)
-    food_data = usda_data.get_food_data('SR Legacy')
-    food, nutrients = data_tables(food_data)
-    
-    food_df = pd.DataFrame(food)
-    nutri_df = pd.DataFrame(nutrients)
+    foods, nutrients, declarations = data_tables(usda_data.get_food_data('SR Legacy'))
     
     nutri_base = NutriBase(sql_password_file)
     
-    nutri_base.create_tabs()
-    nutri_base.add_data('food_product', food_df)
-    nutri_base.add_data('nutrient', nutri_df)
+    nutri_base.add_data('food_product', foods)
+    nutri_base.add_data('nutrient', nutrients)
+    nutri_base.add_data('nutrition_declaration', declarations)
+    
+    

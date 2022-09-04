@@ -1,20 +1,41 @@
 from dataclasses import dataclass
 from dataclasses import InitVar
 
-@dataclass
-class Nutrient:
-    nutrient_id: int = 0
-    food: int = 0
-    name: str = ''
-    unit: str = ''
-    value: float = 0.0
-    
 
 @dataclass
 class FoodProduct:
-    fdc_id: int = 0
+    fp_id: int = 0
     category: str = ''
     description: str = ''
+
+
+@dataclass
+class Nutrient:
+    n_id: int = 0
+    name: str = ''
+    unit: str = ''    
+
+
+@dataclass
+class NutritionDeclaration:
+    nd_id: int = 0
+    food_ref: int = 0
+    nutrient_ref: int = 0
+    value: float = 0.0
+
+
+# @dataclass
+# class NutrientsDataHolder:
+#     ''' 
+#     This is a dataclass containing data for Nutrient 
+#     and NutritionDeclaration instances.
+#     '''
+#     nutrient_id: int = 0
+#     nutrition_declaration_id: int = 0
+#     food_ref: int = 0
+#     name: str = ''
+#     unit: str = ''
+#     value: float = 0.0
 
 
 

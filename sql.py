@@ -31,7 +31,7 @@ class DataBase():
                         user = self.user,
                         passwd = self.password
             )
-            print("MySQL Database connection successful")
+            print("MySQL server connection successful")
         except Error as err:
             print(f"Error: '{err}'")
         return connection
@@ -125,18 +125,13 @@ class DataBase():
         return [tab[0] for tab in self.read_query('SHOW TABLES;')]
     
     def add_data(self, table_name, data_frame):
-        print('add_data')
         cols = data_frame.columns.tolist()
         cols_query = ', '.join(cols)
         rows_query = ', '.join(['%s']*len(cols))
         
         sql_query = f'INSERT INTO {table_name} ({cols_query}) VALUES ({rows_query})'
         values = [tuple(row) for i, row in tqdm(data_frame.iterrows())]
-        print('adding data')
-        print(sql_query)
-        print(values[0])
         self.execute_list_query(sql_query, values)
-        print('end')
 
 
 
