@@ -1,7 +1,6 @@
 from sql import DataBase
 import pandas as pd
 from usda import USDA
-from data_handler import data_tables
 
 class NutriBase(DataBase):
     def __init__(self, user_password_file, *args):
@@ -20,7 +19,8 @@ class NutriBase(DataBase):
     def fill_tables(self, usda_api_key_file, *usda):
         for usda_data_type in usda:
             usda_data = USDA(usda_api_key_file)
-            foods, nutrients, declarations = data_tables(usda_data.get_food_data(usda_data_type))
+            food_data = usda_data.get_food_data(usda_data_type)
+            foods, nutrients, declarations = usda_data.sort_data(food_data)
             
             self.add_data('food_product', foods)
             self.add_data('nutrient', nutrients)

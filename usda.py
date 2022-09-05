@@ -1,6 +1,9 @@
 import concurrent.futures
 import requests
+import pandas as pd
 from tqdm import tqdm
+
+from food import *
 
 class USDA():
     def __init__(self, api_key_file):
@@ -63,6 +66,34 @@ class USDA():
             
         return food_data
     
+    
+    def sort_data(self, food_data):
+        f_products = []
+        nutrients = []
+        n_declarations = []
+        
+        for fd in tqdm(food_data):
+            fp_id = fd.get('fdcId')
+            cat = fd.get('foodCategory')
+            desc = fd.get('description')
+            fd_nutrient_data = fd.get('foodNutrients')
+            f_products.append(FoodProduct(fp_id, cat, desc))
+            
+            for fn in fd_nutrient_data:
+                n_id = fn.get('nutrientId')
+                nd_id = fn.get('foodNutrientId')
+                name = fn.get('nutrientName')
+                unit = fn.get('unitName')
+                value = fn.get('value')
+                
+                nutrients.append(Nutrient(n_id, name, unit))
+                n_declarations.append(NutritionDeclaration(nd_id, fp_id, n_id, value))
+                
+        f_products = pd.DataFrame(f_products)
+        nutrients = pd.DataFrame(nutrients).drop_duplicates()
+        n_declarations = pd.DataFrame(n_declarations)
+        
+        return f_products, nutrients, n_declarations
 
 if __name__ == '__main__':    
     u = USDA('key.txt')
