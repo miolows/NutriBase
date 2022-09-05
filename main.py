@@ -1,7 +1,3 @@
-import pandas as pd
-
-from usda import USDA
-from data_handler import data_tables
 from nutri_base import NutriBase
 
 

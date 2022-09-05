@@ -131,21 +131,3 @@ class DataBase():
         sql_query = f'INSERT INTO {table_name} ({cols_query}) VALUES ({rows_query})'
         values = [tuple(row) for i, row in tqdm(data_frame.iterrows())]
         self.execute_list_query(sql_query, values)
-
-
-
-    # def create_table(self, connection, table_name, pandas_df, primary_key_index=0):
-    #     type_to_sql = {'int64': 'INT', 'int32': 'INT', 'float64': 'FLOAT', 'bool': 'BOOLEAN'}
-    #     field_names = list(pandas_df.columns.values)
-    #     field_types = [type_to_sql.get(str(i), 'VARCHAR(40)') for i in list(pandas_df.dtypes)]
-    #     lines = []
-    #     for i, f in enumerate(zip(field_names, field_types)):
-    #         line = " ".join(f)
-    #         if i == primary_key_index:
-    #             line += " PRIMARY KEY, "
-    #         else:
-    #             line += ", "
-    #         lines.append(line)
-        
-    #     query = f'CREATE TABLE IF NOT EXISTS {table_name}({"".join(lines)});'
-    #     self.execute_query(connection, query)
