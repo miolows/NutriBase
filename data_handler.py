@@ -66,7 +66,7 @@ def data_tables(foods_data):
             value = fn.get('value')
             
             nutrients.append(Nutrient(n_id, name, unit))
-            n_declarations.append(NutritionDeclaration(nd_id, n_id, fp_id, value))
+            n_declarations.append(NutritionDeclaration(nd_id, fp_id, n_id, value))
             
     f_products = pd.DataFrame(f_products)
     nutrients = pd.DataFrame(nutrients).drop_duplicates()
@@ -91,4 +91,5 @@ def data_tables(foods_data):
 
 if __name__ == '__main__':
     usda_data = USDA('key.txt')
-    foods, nutrients, declarations = data_tables(usda_data.get_food_data('SR Legacy'))
+    raw = usda_data.get_food_data('SR Legacy')
+    foods, nutrients, declarations = data_tables(raw)

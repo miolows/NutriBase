@@ -19,13 +19,13 @@ class USDA():
                        'All': 'Branded,Foundation,Survey%20%28FNDDS%29,SR%20Legacy'}
         return type_string.get(db, type_string.get('All'))
 
-    def food_item(self, food_id, nutrients, data_format='full'):
+    def food_item(self, food_id, nutrients=[], data_format='full'):
         n = '&'.join([f'nutrients={i}' for i in nutrients])
         url = f'{self.main_url}/food/{food_id}?format={data_format}&{n}&api_key={self.key}'
         api_response = requests.get(url)
         return api_response.json()
 
-    def food_items(self, food_ids, nutrients, data_format='full'):
+    def food_items(self, food_ids, nutrients=[], data_format='full'):
         fid = '&'.join([f'fdcIds={i}' for i in food_ids])
         n = '&'.join([f'nutrients={i}' for i in nutrients])
         url = f'{self.main_url}/foods?{fid}&format={data_format}&{n}&api_key={self.key}'

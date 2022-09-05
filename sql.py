@@ -93,7 +93,7 @@ class DataBase():
             print(f"Error: '{err}'")
             
             
-    def read_labeled_query(self, query):
+    def lread_query(self, query):
         cursor = self.db_connection.cursor()
         result = None
         try:
@@ -109,13 +109,12 @@ class DataBase():
     def create_table(self, name, fields, types, details):
         sql_lines = ', '.join([f'{f} {t} {d}' for f, t, d in zip(fields, types, details)])
         query = f'CREATE TABLE IF NOT EXISTS {name} ({sql_lines});'
-        print(query)
         self.execute_query(query)
             
     def alter_table(self, table, foreign_key, reference_table, reference_field, on_delete):
         query = f'''
         ALTER TABLE {table}
-        ADD FOREIGN KEY(foreign_key)
+        ADD FOREIGN KEY({foreign_key})
         REFERENCES {reference_table}({reference_field})
         ON DELETE {on_delete};
         '''
