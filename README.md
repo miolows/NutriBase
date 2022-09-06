@@ -7,6 +7,11 @@ NutriBase has three main features:
 * filtering of collected data,
 * providing basic MySQL database functionality (creating a database and tables, defining relationships between tables, creating arbitrary sql queries) and specific ones to simplify interaction with the database directly related to this project.
 
+
+## ERD
+![Data Base ERD](https://user-images.githubusercontent.com/104384740/188573371-d8505f6a-4d17-440c-bd2c-461691f9806c.png)
+
+
 ## Setup
 Project requirements are listed in the requirements.txt file:
 ```
